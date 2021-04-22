@@ -8,3 +8,9 @@
 - Double Snouter -
 - Leaning Jowler -
 - Double Leaning Jowler -
+
+<br/>
+
+# Plan
+
+    Work out probabilities
