@@ -1,0 +1,15 @@
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.csprojAssemblyReference.cache
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.GeneratedMSBuildEditorConfig.editorconfig
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.AssemblyInfoInputs.cache
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.AssemblyInfo.cs
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.csproj.CoreCompileInputs.cache
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/bin/Debug/net5.0/back-end.deps.json
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/bin/Debug/net5.0/back-end.runtimeconfig.json
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/bin/Debug/net5.0/back-end.runtimeconfig.dev.json
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/bin/Debug/net5.0/back-end.dll
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/bin/Debug/net5.0/ref/back-end.dll
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/bin/Debug/net5.0/back-end.pdb
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.dll
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/ref/back-end.dll
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.pdb
+/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/Debug/net5.0/back-end.genruntimeconfig.cache
