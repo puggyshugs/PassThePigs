@@ -2,21 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
+using static System.Console;
 namespace PassThePigsGames
 {
     class PassPigs
     {
+        private string GameName;
         private int Score;
 
         public PassPigs()
         {
             //initialise anything we need later on:
+            Score = 0;
+            GameName = "Pass The Pigs";
         }
 
-        public void start()
+        public void Start()
         {
             //Method that starts the game.
 
+            Title = GameName;
+            System.Console.WriteLine($"==={GameName}===");
+            System.Console.WriteLine("Press any key to exit");
+            ReadKey();
         }
 
         private void PlayRound()

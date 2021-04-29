@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using PassThePigsGames;
 
 namespace backend
 {
@@ -7,7 +8,11 @@ namespace backend
     {
         static void Main(string[] args)
         {
-            Random rand = new Random();
+
+            PassPigs myGame = new PassPigs();
+            myGame.Start();
+
+            // Random rand = new Random();
             // int number = rand.Next(1, 5);
             // System.Console.WriteLine(number);
 
@@ -95,6 +100,6 @@ namespace backend
             //     }
 
             //     Console.ReadLine();
-            // }
         }
     }
+}
