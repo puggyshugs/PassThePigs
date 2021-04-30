@@ -9,7 +9,7 @@ namespace backend
         static void Main(string[] args)
         {
 
-            PassPigs myGame = new PassPigs();
+            PassThePigs myGame = new PassThePigs();
             myGame.Start();
 
             // Random rand = new Random();

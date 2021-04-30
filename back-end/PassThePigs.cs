@@ -5,7 +5,7 @@ using static System.Console;
 
 namespace PassThePigsGames
 {
-    class PassPigs
+    class PassThePigs
     {
         private int Score;
         private string GameName;
@@ -27,8 +27,7 @@ namespace PassThePigsGames
 
         }
 
-
-        public PassPigs()
+        public PassThePigs()
         {
             //initialise anything we need later on:
             Score = 0;
@@ -41,7 +40,7 @@ namespace PassThePigsGames
             //Method that starts the game.
 
             Title = GameName;
-            System.Console.WriteLine($"=== {GameName} ===");
+            System.Console.WriteLine($"\n=== {GameName} ===");
             System.Console.WriteLine("\nLet's Pass these Pigs!");
             System.Console.WriteLine("\nInstructions:");
             System.Console.WriteLine("\t> You will roll the pigs, each landing position will mean different points!");
@@ -71,9 +70,8 @@ namespace PassThePigsGames
         {
             // Method that runs one round of rolling and guessing
             Clear();
-            System.Console.WriteLine("Pass these Pigs or bank your points? (pass/bank)");
+            System.Console.WriteLine("It's time to PASS these PIGS! (pass)");
             string response = ReadLine().Trim().ToLower();
-            System.Console.WriteLine($"You want to {response}.");
 
             PigThrows PigPass = (PigThrows)(RandomGenerator.Next(1, 12));
 
@@ -131,26 +129,33 @@ namespace PassThePigsGames
                     break;
                 case PigThrows.MakingBacon:
                     Score = 0;
-                    System.Console.WriteLine("Making Bacon - You've lost all of you points");
+                    System.Console.WriteLine("You've been caught making bacon");
+                    System.Console.WriteLine("\nThis is not the time OR place for such fornication.");
+                    System.Console.WriteLine("\nThe Pigs are disgusted.");
                     System.Console.WriteLine($"Your score is {Score}");
                     break;
             }
 
-            // if (response == "pass" && PigPass == PigThrows.PigOut)
-            // {
-            //     Score = 0;
-            //     System.Console.WriteLine("You ");
-            // }
-
-            System.Console.WriteLine("\n\t* Press any key to continue *  ");
-            ReadKey();
-            PlayRound();
+            if (Score >= 100)
+            {
+                Win();
+            }
+            else
+            {
+                System.Console.WriteLine("\n\t* Press any key to continue *  ");
+                ReadKey();
+                PlayRound();
+            }
 
         }
 
         private void Win()
         {
             // Method that increments the score and lets the player know they won
+            System.Console.WriteLine("\n\t=== The Pigs favour you. ===");
+            System.Console.WriteLine("\n\t=== Congratulations, Pig. ===");
+            System.Console.WriteLine("\nPress any key to continue.");
+
         }
 
         private void Lose()
@@ -158,9 +163,16 @@ namespace PassThePigsGames
             // Method that lets the player know they lost
         }
 
-        private void AskToPlayAgain()
+        private void PlayAgainOrBank()
         {
             // Ask player if they want to play another round
+            Write("Pass these pigs again or bank your points? (pass/bank)");
+            string playAgainResponse = ReadLine().Trim().ToLower();
+
+            if (playAgainResponse == "pass")
+            {
+                PlayRound();
+            }
         }
     }
 }
