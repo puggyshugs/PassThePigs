@@ -12,6 +12,22 @@ namespace PassThePigsGames
         private string GameName;
         private Random RandomGenerator;
 
+        public enum PigThrows
+        {
+            PigOut,
+            Sider,
+            Trotter,
+            DoubleTrotter,
+            Razorback,
+            DoubleRazorback,
+            Snouter,
+            DoubleSnouter,
+            LeaningJowler,
+            DoubleLeaningJowler,
+            MakingBacon
+
+        }
+
         public PassPigs()
         {
             //initialise anything we need later on:
@@ -36,12 +52,16 @@ namespace PassThePigsGames
             string playResponse = ReadLine().Trim().ToLower();
             if (playResponse == "yes")
             {
+                Clear();
                 System.Console.WriteLine("\n  === The Pigs will sing to your honour! ===  ");
+                System.Console.WriteLine("\n\t* Press any key to continue *  ");
+                ReadKey();
                 PlayRound();
 
             }
             else
             {
+                Clear();
                 System.Console.WriteLine("\nThe Pigs are displeased. They will not forget this desertion.");
 
             }
@@ -55,62 +75,48 @@ namespace PassThePigsGames
             string response = ReadLine().Trim().ToLower();
             System.Console.WriteLine($"You want to {response}.");
 
-            int PigPass = RandomGenerator.Next(1, 12);
-            if (PigPass == 1)
-            {
-                System.Console.WriteLine("You are a stinky pig and you have pigged out! Player 2's go!");
+            PigThrows PigPass = (PigThrows)(RandomGenerator.Next(1, 12));
 
-            }
-            else if (PigPass == 2)
+            switch (PigPass)
             {
-                System.Console.WriteLine("Sider, 1 point");
-
+                case PigThrows.PigOut:
+                    System.Console.WriteLine("You are a stinky pig and you have pigged out! Player 2's go!");
+                    break;
+                case PigThrows.Sider:
+                    System.Console.WriteLine("Sider, 1 point");
+                    break;
+                case PigThrows.Trotter:
+                    System.Console.WriteLine("Trotter, 5 points!");
+                    break;
+                case PigThrows.DoubleTrotter:
+                    System.Console.WriteLine("Double Trotter, 20 points");
+                    break;
+                case PigThrows.Razorback:
+                    System.Console.WriteLine("Razorback, 5 points");
+                    break;
+                case PigThrows.DoubleRazorback:
+                    System.Console.WriteLine("Double Razorback, 20 points");
+                    break;
+                case PigThrows.Snouter:
+                    System.Console.WriteLine("Snouter, 10 points");
+                    break;
+                case PigThrows.DoubleSnouter:
+                    System.Console.WriteLine("Double Snouter, 40 points");
+                    break;
+                case PigThrows.LeaningJowler:
+                    System.Console.WriteLine("Leaning Jowler, 15 points");
+                    break;
+                case PigThrows.DoubleLeaningJowler:
+                    System.Console.WriteLine("Double Leaning Jowler, 60 points");
+                    break;
+                case PigThrows.MakingBacon:
+                    System.Console.WriteLine("Making Bacon - You've lost all of you points");
+                    break;
             }
-            else if (PigPass == 3)
-            {
-                System.Console.WriteLine("Trotter, 5 points!");
+            System.Console.WriteLine("\n\t* Press any key to continue *  ");
+            ReadKey();
+            PlayRound();
 
-            }
-            else if (PigPass == 4)
-            {
-                System.Console.WriteLine("Double Trotter, 20 points");
-
-            }
-            else if (PigPass == 5)
-            {
-                System.Console.WriteLine("Razorback, 5 points");
-
-            }
-            else if (PigPass == 6)
-            {
-                System.Console.WriteLine("Double Razorback, 20 points");
-
-            }
-            else if (PigPass == 7)
-            {
-                System.Console.WriteLine("Snouter, 10 points");
-
-            }
-            else if (PigPass == 8)
-            {
-                System.Console.WriteLine("Double Snouter, 40 points");
-
-            }
-            else if (PigPass == 9)
-            {
-                System.Console.WriteLine("Leaning Jowler, 15 points");
-
-            }
-            else if (PigPass == 10)
-            {
-                System.Console.WriteLine("Double Leaning Jowler, 60 points");
-
-            }
-            else if (PigPass == 11)
-            {
-                System.Console.WriteLine("Making Bacon - You've lost all of you points");
-
-            }
         }
 
         private void Win()
