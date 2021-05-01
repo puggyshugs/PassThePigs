@@ -10,11 +10,11 @@ namespace PassThePigsGame.Program
         {
 
             PassThePigs myGame = new PassThePigs();
-            // myGame.Start();
+            myGame.Start();
 
-            int xy = Add(4, 5);
-            System.Console.WriteLine(xy);
-            System.Console.WriteLine(IsOdd(5));
+            // int xy = Add(4, 5);
+            // System.Console.WriteLine(xy);
+            // System.Console.WriteLine(IsOdd(5));
 
         }
 

@@ -5,7 +5,7 @@ using static System.Console;
 
 namespace PassThePigsGame.PassThePigsClass
 {
-    class PassThePigs
+    public class PassThePigs
     {
         private int Score;
         private string GameName;
