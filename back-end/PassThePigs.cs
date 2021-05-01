@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using static System.Console;
 
-namespace PassThePigsGames
+namespace PassThePigsGame.PassThePigsClass
 {
     class PassThePigs
     {
@@ -38,9 +38,9 @@ namespace PassThePigsGames
         public void Start()
         {
             //Method that starts the game.
-
+            Clear();
             Title = GameName;
-            System.Console.WriteLine($"\n=== {GameName} ===");
+            System.Console.WriteLine($"=== {GameName} ===");
             System.Console.WriteLine("\nLet's Pass these Pigs!");
             System.Console.WriteLine("\nInstructions:");
             System.Console.WriteLine("\t> You will roll the pigs, each landing position will mean different points!");
@@ -142,11 +142,12 @@ namespace PassThePigsGames
             }
             else
             {
-                System.Console.WriteLine("\n\t* Press any key to continue *  ");
-                ReadKey();
-                PlayRound();
+                // System.Console.WriteLine("\n\t* Press any key to continue *  ");
+                // ReadKey();
+                PlayAgainOrBank();
             }
 
+            PlayAgainOrBank();
         }
 
         private void Win()
