@@ -166,6 +166,7 @@ namespace PassThePigsGame.PassThePigsClass
         {
             // Method that lets the player know they lost
             Clear();
+
             System.Console.WriteLine("You have dishonoured the pigs.\nTonight, it would be wise to sleep with one eye open...");
         }
 
