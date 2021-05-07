@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using PassThePigsGame.PassThePigsClass;
+using PassThePigsGame.Game;
 
 namespace PassThePigsGame.Program
 {
@@ -9,7 +9,7 @@ namespace PassThePigsGame.Program
         static void Main(string[] args)
         {
 
-            PassThePigs myGame = new PassThePigs();
+            Game.Game myGame = new Game.Game();
             myGame.Start();
 
             // int xy = Add(4, 5);
