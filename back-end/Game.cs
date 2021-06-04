@@ -18,12 +18,13 @@ namespace PassThePigsGame.Game
             RandomGenerator = new Random();
         }
 
+
         public void Start()
         {
             //Method that starts the game.
             Clear();
             Title = GameName;
-            System.Console.WriteLine($"=== {GameName} ===");
+            System.Console.WriteLine($"=== {Title} ===");
             System.Console.WriteLine("\nLet's Pass these Pigs!");
             System.Console.WriteLine("\nInstructions:");
             System.Console.WriteLine("\t> You will roll the pigs, each landing position will mean different points!");

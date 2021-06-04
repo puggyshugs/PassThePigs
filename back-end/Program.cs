@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using PassThePigsGame.Game;
+using static System.Console;
 
 namespace PassThePigsGame.Program
 {
@@ -8,13 +9,23 @@ namespace PassThePigsGame.Program
     {
         static void Main(string[] args)
         {
+            Clear();
+            System.Console.WriteLine("How many little piggies want to play?");
+            System.Console.WriteLine("\n\t 3, 4, 5 or 6?");
+
+            string numOfPlayers = ReadLine().Trim().ToLower();
+
+            if (numOfPlayers == "3")
+            {
+
+            }
+
+
 
             Game.Game myGame = new Game.Game();
             myGame.Start();
 
-            // int xy = Add(4, 5);
-            // System.Console.WriteLine(xy);
-            // System.Console.WriteLine(IsOdd(5));
+
 
         }
 
