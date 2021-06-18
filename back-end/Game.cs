@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using static System.Console;
 using PassThePigsGame.PigsClass;
 
@@ -24,7 +22,7 @@ namespace PassThePigsGame.Game
             //Method that starts the game.
             Clear();
             Title = GameName;
-            System.Console.WriteLine($"=== {Title} ===");
+            System.Console.WriteLine($"=== {GameName} ===");
             System.Console.WriteLine("\nLet's Pass these Pigs!");
             System.Console.WriteLine("\nInstructions:");
             System.Console.WriteLine("\t> You will roll the pigs, each landing position will mean different points!");

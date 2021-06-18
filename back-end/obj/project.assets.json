@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/back-end.csproj",
+      "projectUniqueName": "/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/back-end/back-end.csproj",
       "projectName": "back-end",
-      "projectPath": "/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/back-end.csproj",
+      "projectPath": "/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/back-end/back-end.csproj",
       "packagesPath": "/Users/georgecollingridge/.nuget/packages/",
-      "outputPath": "/Users/georgecollingridge/Desktop/SOCproject_folder/SOC projects/PassThePigs/back-end/obj/",
+      "outputPath": "/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/back-end/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/georgecollingridge/.nuget/NuGet/NuGet.Config"
