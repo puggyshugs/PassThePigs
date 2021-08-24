@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using back_end;
 using PassThePigsGame.Program;
-using PassThePigsGame.PigsClass;
+using PassThePigsGame.PlayMethods;
 
 namespace back_end.Tests
 {

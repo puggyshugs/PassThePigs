@@ -10,11 +10,8 @@ namespace PassThePigsGame.Program
             System.Console.WriteLine("How many little piggies want to play?");
             System.Console.WriteLine("\n\t 3, 4, 5 or 6?");
 
-            Game.Game myGame = new Game.Game();
+            Game.Game myGame = new Game.Game("Pass The Pigs");
             myGame.Start();
-
-
-
         }
 
         public static int Add(int x, int y)
