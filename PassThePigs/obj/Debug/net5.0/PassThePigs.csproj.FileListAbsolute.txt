@@ -1,0 +1,15 @@
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/bin/Debug/net5.0/PassThePigs.deps.json
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/bin/Debug/net5.0/PassThePigs.runtimeconfig.json
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/bin/Debug/net5.0/PassThePigs.runtimeconfig.dev.json
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/bin/Debug/net5.0/PassThePigs.dll
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/bin/Debug/net5.0/ref/PassThePigs.dll
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/bin/Debug/net5.0/PassThePigs.pdb
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.csprojAssemblyReference.cache
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.GeneratedMSBuildEditorConfig.editorconfig
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.AssemblyInfoInputs.cache
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.AssemblyInfo.cs
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.csproj.CoreCompileInputs.cache
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.dll
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/ref/PassThePigs.dll
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.pdb
+/Users/georgecollingridge/Desktop/Game Project Folder/PassThePigs/PassThePigs/obj/Debug/net5.0/PassThePigs.genruntimeconfig.cache
