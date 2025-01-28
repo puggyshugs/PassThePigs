@@ -1,6 +1,0 @@
-@PassThePigs.Api_HostAddress = http://localhost:5233
-
-GET {{PassThePigs.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
