@@ -67,8 +67,11 @@
         <mxCell id="xrbAfILPCAthkz9J0HoY-18" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Open webhook to update game in real time&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="150" y="160" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="xrbAfILPCAthkz9J0HoY-20" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Text&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="xrbAfILPCAthkz9J0HoY-20" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Open connection to process the game play and game state&amp;nbsp;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="160" y="320" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xrbAfILPCAthkz9J0HoY-22" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Open channel to keep game state updated in cache&amp;nbsp;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="290" y="260" width="100" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
