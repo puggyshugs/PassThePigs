@@ -1,8 +1,9 @@
 using System;
+using PassThePigs.Services.Interfaces;
 
 namespace PassThePigs.Services.Services;
 
-public class GameService
+public class GameService : IGameService
 {
 
 }
