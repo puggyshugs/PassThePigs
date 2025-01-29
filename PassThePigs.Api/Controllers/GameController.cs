@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PassThePigs.Services.Cache.Interfaces;
 using PassThePigs.Services.Interfaces;
 
 namespace PassThePigs.Api.Controllers
@@ -8,11 +8,25 @@ namespace PassThePigs.Api.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
+        private readonly IGameMemoryCache _gameCache;
         private IGameService _gameService;
 
-        public GameController(IGameService gameService)
+        public GameController(IGameService gameService, IGameMemoryCache gameCache)
         {
             _gameService = gameService;
+            _gameCache = gameCache;
+        }
+
+        [HttpGet("state")]
+        public IActionResult GetGameState()
+        {
+            return Ok("Not implemented yet.");
+            // var gameState = _gameCache.GetGameState();
+            // if (gameState == null)
+            // {
+            //     return NotFound("No active game found.");
+            // }
+            // return Ok(gameState);
         }
     }
 }

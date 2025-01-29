@@ -2,7 +2,7 @@ using System;
 
 namespace PassThePigs.Services.Interfaces;
 
-public class IGameService
+public interface IGameService
 {
 
 }
