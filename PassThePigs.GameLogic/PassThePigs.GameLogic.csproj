@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../PassThePigs.Services/PassThePigs.Services.csproj" />
+  </ItemGroup>
+
 </Project>

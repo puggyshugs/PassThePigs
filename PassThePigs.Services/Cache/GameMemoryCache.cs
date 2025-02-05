@@ -2,51 +2,30 @@ using System.Collections.Concurrent;
 using PassThePigs.Services.Cache.CacheModels;
 using PassThePigs.Services.Cache.Interfaces;
 
-namespace PassThePigs.Services.Cache;
+namespace PassThePigs.Services.Services;
 
 public class GameMemoryCache : IGameMemoryCache
 {
-    private readonly ConcurrentDictionary<string, GameStateModel> _games = new();
+    private readonly ConcurrentDictionary<Guid, GameStateModel> _cachedGamesList = new();
 
-    public void AddPlayer(string gameId, string playerName)
+    public GameStateModel CreateGame(Guid gameId, GameStateModel gameState)
     {
-        if (!_games.ContainsKey(gameId))
-        {
-            _games[gameId] = new GameStateModel();
-        }
-        _games[gameId].Players.Add(new PlayerModel { PlayerName = playerName, Score = 0 });
+        _cachedGamesList[gameId] = gameState;
+        return gameState;
     }
 
-    public void UpdateScore(string gameId, string playerName, int score)
+    public void UpdateGame(Guid gameId, GameStateModel gameState)
     {
-        if (_games.TryGetValue(gameId, out var gameState))
-        {
-            var player = gameState.Players.FirstOrDefault(p => p.PlayerName == playerName);
-            if (player != null)
-            {
-                player.Score += score;
-            }
-        }
+        _cachedGamesList[gameId] = gameState;
     }
 
-    public GameStateModel GetGameState(string gameId)
+    public GameStateModel? GetGameState(Guid gameId)
     {
-        try
-        {
-            var currentGameState = _games.TryGetValue(gameId, out var gameState) ? gameState : null;
-            return currentGameState ?? new GameStateModel();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return _cachedGamesList.TryGetValue(gameId, out var gameState) ? gameState : null;
     }
 
-    public void EndGame(string gameId)
+    public void EndGame(Guid gameId)
     {
-        _games.TryRemove(gameId, out _);
+        _cachedGamesList.TryRemove(gameId, out _);
     }
-
 }
