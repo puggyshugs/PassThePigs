@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalR Client</title>
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@6.0.0/dist/browser/signalr.min.js"></script>
+</head>
+<body>
+    <h1>SignalR Test</h1>
+    <div id="status">Connecting...</div>
+
+    <script>
+        // Create a connection to the SignalR hub
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5233/GameHub")  // URL of your SignalR hub
+            .build();
+
+        // Handle connection start
+        connection.start()
+            .then(() => {
+                document.getElementById("status").innerText = "Connected to SignalR Hub";
+            })
+            .catch(err => {
+                document.getElementById("status").innerText = `Error: ${err}`;
+                console.error("Error connecting to SignalR Hub:", err);
+            });
+
+        // Optionally, you can listen for messages from the hub
+        connection.on("ReceiveMessage", (message) => {
+            console.log("Message received from the server:", message);
+        });
+    </script>
+</body>
+</html>
