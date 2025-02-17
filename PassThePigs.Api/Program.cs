@@ -1,5 +1,4 @@
 using PassThePigs.Hub.Hubs;
-using PassThePigs.Services.Cache;
 using PassThePigs.Services.Cache.Interfaces;
 using PassThePigs.Services.Interfaces;
 using PassThePigs.Services.Services;
