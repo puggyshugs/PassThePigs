@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PassThePigs.Domain;
 using PassThePigs.Services.Cache.CacheModels;
 
 namespace PassThePigs.GameLogic.Helpers
