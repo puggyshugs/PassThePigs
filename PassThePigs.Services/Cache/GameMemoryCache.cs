@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using PassThePigs.Domain;
 using PassThePigs.Services.Cache.CacheModels;
 using PassThePigs.Services.Cache.Interfaces;
 

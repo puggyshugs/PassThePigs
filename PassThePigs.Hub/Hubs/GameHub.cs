@@ -1,18 +1,15 @@
 using Microsoft.AspNetCore.SignalR;
-using PassThePigs.GameLogic.Interface;
-using PassThePigs.Services.Cache.CacheModels;
+using PassThePigs.Domain;
 using PassThePigs.Services.Interfaces;
 
 namespace PassThePigs.Hub.Hubs;
 public class GameHub : Microsoft.AspNetCore.SignalR.Hub
 {
     private readonly IGameCacheService _cacheService;
-    private readonly IGameLogic _gameLogic;
 
-    public GameHub(IGameCacheService cacheService, IGameLogic gameLogic)
+    public GameHub(IGameCacheService cacheService)
     {
         _cacheService = cacheService;
-        _gameLogic = gameLogic;
     }
 
     public async Task CreateGame()
@@ -36,13 +33,13 @@ public class GameHub : Microsoft.AspNetCore.SignalR.Hub
         if (gameState == null) return;
 
         // Apply game logic to process the roll
-        var updatedState = _gameLogic.ProcessRoll(gameState, playerId);
+        //var updatedState = _gameLogic.ProcessRoll(gameState, playerId);
 
         // Save updated game state
-        _cacheService.SaveGameState(gameId, updatedState);
+        //_cacheService.SaveGameState(gameId, updatedState);
 
         // Send updated game state to all players
-        await Clients.Group(gameId.ToString()).SendAsync("GameUpdated", updatedState);
+        //await Clients.Group(gameId.ToString()).SendAsync("GameUpdated", updatedState);
     }
 
     public async Task GetGameState(Guid gameId)

@@ -1,4 +1,6 @@
-namespace PassThePigs.Services.Cache.CacheModels;
+using System;
+
+namespace PassThePigs.Domain;
 
 public class PlayerModel
 {

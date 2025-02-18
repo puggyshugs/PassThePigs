@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PassThePigs.Services.Interfaces;
+using PassThePigsApi.Mappers;
 
 namespace PassThePigs.Api.Controllers
 {
@@ -23,14 +24,14 @@ namespace PassThePigs.Api.Controllers
             {
                 return NotFound("No active game found.");
             }
-            return Ok(gameState);
+            return Ok(GameStateMapper.ToDto(gameState));
         }
 
         [HttpPost("CreateGame")]
         public IActionResult CreateGame()
         {
             var createdGame = _gameCacheService.CreateGame();
-            return Ok(createdGame);
+            return Ok(GameStateMapper.ToDto(createdGame));
         }
 
         [HttpDelete("EndGame")]

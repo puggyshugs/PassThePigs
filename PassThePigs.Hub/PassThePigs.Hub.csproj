@@ -5,13 +5,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="9.0.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.2.0"/>
-    <PackageReference Include="SignalRSwaggerGen" Version="4.7.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="9.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.2.0" />
+    <PackageReference Include="SignalRSwaggerGen" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../PassThePigs.GameLogic/PassThePigs.GameLogic.csproj"/>
-    <ProjectReference Include="../PassThePigs.Services/PassThePigs.Services.csproj"/>
+    <ProjectReference Include="../PassThePigs.Domain/PassThePigs.Domain.csproj" />
+    <ProjectReference Include="../PassThePigs.GameLogic/PassThePigs.GameLogic.csproj" />
+    <ProjectReference Include="../PassThePigs.Services/PassThePigs.Services.csproj" />
   </ItemGroup>
 </Project>
