@@ -1,6 +1,6 @@
-using System;
 using Microsoft.AspNetCore.SignalR;
 using PassThePigs.GameLogic.Interface;
+using PassThePigs.Services.Cache.CacheModels;
 using PassThePigs.Services.Interfaces;
 
 namespace PassThePigs.Hub.Hubs;
@@ -22,6 +22,12 @@ public class GameHub : Microsoft.AspNetCore.SignalR.Hub
 
         _cacheService.SaveGameState(gameId, gameState);
         await Clients.Caller.SendAsync("GameCreated", gameId);
+    }
+
+    public async Task SaveGame(Guid gameId, GameStateModel gameState)
+    {
+        _cacheService.SaveGameState(gameId, gameState);
+        await Clients.Caller.SendAsync("GameSaved", gameId);
     }
 
     public async Task RollPigs(Guid gameId, string playerId)

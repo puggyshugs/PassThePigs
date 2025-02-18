@@ -8,7 +8,7 @@ namespace PassThePigs.Api.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
-        private IGameCacheService _gameCacheService;
+        private readonly IGameCacheService _gameCacheService;
 
         public GameController(IGameCacheService gameCacheService)
         {
@@ -27,10 +27,9 @@ namespace PassThePigs.Api.Controllers
         }
 
         [HttpPost("CreateGame")]
-        public async Task<IActionResult> CreateGame()
+        public IActionResult CreateGame()
         {
             var createdGame = _gameCacheService.CreateGame();
-            var x = AddPlayer(createdGame.GameId, "Player1");
             return Ok(createdGame);
         }
 
@@ -41,12 +40,6 @@ namespace PassThePigs.Api.Controllers
         {
             _gameCacheService.RemoveGameState(gameId);
             return Ok(new { Message = $"Game: {gameId} ended!" });
-        }
-
-        private string AddPlayer(Guid gameId, string playerName)
-        {
-            // _gameCacheService.AddPlayer(gameId, playerName);
-            return "Player added!";
         }
     }
 }
