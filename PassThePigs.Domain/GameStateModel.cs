@@ -8,4 +8,5 @@ public class GameStateModel
     public string Message { get; set; } = string.Empty;
     public List<PlayerModel> Players { get; set; } = [];
     public int CurrentTurnIndex { get; set; }
+    public bool IsGameOver { get; set; }
 }
