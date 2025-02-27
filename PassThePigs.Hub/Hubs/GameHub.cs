@@ -1,57 +1,54 @@
 using Microsoft.AspNetCore.SignalR;
-using PassThePigs.Domain;
 using PassThePigs.Services.Interfaces;
+using PassThePigs.Domain;
 
 namespace PassThePigs.Hub.Hubs;
+
 public class GameHub : Microsoft.AspNetCore.SignalR.Hub
 {
     private readonly IGameCacheService _cacheService;
+    private readonly IGameLogicService _gameLogicService;
 
-    public GameHub(IGameCacheService cacheService)
+    public GameHub(IGameCacheService cacheService, IGameLogicService gameLogicService)
     {
         _cacheService = cacheService;
+        _gameLogicService = gameLogicService;
     }
 
     public async Task CreateGame()
     {
-        var gameId = Guid.NewGuid();
         var gameState = _cacheService.CreateGame();
-
-        _cacheService.SaveGameState(gameId, gameState);
-        await Clients.Caller.SendAsync("GameCreated", gameId);
+        _cacheService.SaveGameState(gameState.GameId, gameState);
+        await Clients.Caller.SendAsync("GameCreated", gameState.GameId);
     }
 
-    public async Task SaveGame(Guid gameId, GameStateModel gameState)
+    public async Task JoinGame(Guid gameId, string playerName)
     {
-        _cacheService.SaveGameState(gameId, gameState);
-        await Clients.Caller.SendAsync("GameSaved", gameId);
+        _gameLogicService.AddPlayer(gameId, playerName);
+
+        await Groups.AddToGroupAsync(Context.ConnectionId, gameId.ToString());
+        await Clients.Group(gameId.ToString()).SendAsync("PlayerJoined", playerName);
     }
 
-    public async Task RollPigs(Guid gameId, string playerId)
+    public async Task RollPigs(GameStateModel gameStateModel)
     {
-        var gameState = _cacheService.GetGameState(gameId);
-        if (gameState == null) return;
+        _gameLogicService.PlayerRolls(gameStateModel);
+        var updatedState = _cacheService.GetGameState(gameStateModel.GameId);
+        await Clients.Group(gameStateModel.GameId.ToString()).SendAsync("RollPigs", updatedState);
+    }
 
-        // Apply game logic to process the roll
-        //var updatedState = _gameLogic.ProcessRoll(gameState, playerId);
-
-        // Save updated game state
-        //_cacheService.SaveGameState(gameId, updatedState);
-
-        // Send updated game state to all players
-        //await Clients.Group(gameId.ToString()).SendAsync("GameUpdated", updatedState);
+    public async Task BankPoints(GameStateModel gameStateModel)
+    {
+        var updatedState = _gameLogicService.PlayerBanks(gameStateModel);
+        await Clients.Group(gameStateModel.GameId.ToString()).SendAsync("BankPoints", updatedState);
     }
 
     public async Task GetGameState(Guid gameId)
     {
         var gameState = _cacheService.GetGameState(gameId);
-        await Clients.Caller.SendAsync("GameStateRetrieved", gameState);
-    }
-
-    public async Task JoinGame(string gameId, string playerName)
-    {
-        // _gameCacheService.AddPlayer(gameId, playerName);
-        await Clients.All.SendAsync("PlayerJoined", playerName);
+        if (gameState != null)
+        {
+            await Clients.Caller.SendAsync("GameStateRetrieved", gameState);
+        }
     }
 }
-

@@ -3,33 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignalR Client</title>
-    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@6.0.0/dist/browser/signalr.min.js"></script>
+    <title>Pass the Pigs - Multiplayer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        .game-container {
+            border: 2px solid black;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .player-list {
+            text-align: left;
+            border: 1px solid black;
+            padding: 5px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .log-box {
+            text-align: left;
+            border: 1px solid black;
+            padding: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .highlight {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
 </head>
 <body>
-    <h1>SignalR Test</h1>
-    <div id="status">Connecting...</div>
+    <h1>Pass the Pigs - Multiplayer</h1>
+
+    <button onclick="createGame()">Create Game</button>
+    <br><br>
+
+    <input type="text" id="gameIdInput" placeholder="Enter Game ID">
+    <input type="text" id="playerNameInput" placeholder="Enter Player Name">
+    <button onclick="joinGame()">Join Game</button>
+    <br><br>
+
+    <div class="game-container">
+        <h2>Current Players</h2>
+        <ul id="playerList"></ul>
+    
+        <h2>Current Turn</h2>
+        <p id="turnTracker">Waiting for players...</p>
+
+        <button onclick="rollPigs()">Roll Pigs</button>
+        <button onclick="bankPoints()">Bank Points</button>
+    </div>
+
+    <h2>Game Log</h2>
+    <div class="log-box" id="log"></div>
 
     <script>
-        // Create a connection to the SignalR hub
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl("http://localhost:5233/GameHub")  // URL of your SignalR hub
+            .withUrl("http://localhost:5233/GameHub", {
+                transport: signalR.HttpTransportType.WebSockets
+            })
+            .configureLogging(signalR.LogLevel.Information)
             .build();
 
-        // Handle connection start
         connection.start()
-            .then(() => {
-                document.getElementById("status").innerText = "Connected to SignalR Hub";
-            })
-            .catch(err => {
-                document.getElementById("status").innerText = `Error: ${err}`;
-                console.error("Error connecting to SignalR Hub:", err);
-            });
+            .then(() => logMessage("✅ Connected to SignalR Hub"))
+            .catch(err => logMessage("❌ Error: " + err));
 
-        // Optionally, you can listen for messages from the hub
-        connection.on("ReceiveMessage", (message) => {
-            console.log("Message received from the server:", message);
+        connection.on("GameCreated", (gameId) => {
+            logMessage(`🎉 Game Created! Game ID: <span class="highlight">${gameId}</span>`);
+            document.getElementById("gameIdInput").value = gameId;
         });
+
+        connection.on("PlayerJoined", (playerName) => {
+            logMessage("Player Joined: " + playerName);
+            
+            // Add player to the UI list
+            const playerList = document.getElementById("playerList");
+            const newPlayerItem = document.createElement("li");
+            newPlayerItem.textContent = `${playerName} - Score: 0`;
+            playerList.appendChild(newPlayerItem);
+        });
+
+
+        function updatePlayerList(player) {
+            let playerList = document.getElementById("playerList");
+            if (playerList.innerHTML.includes("No players yet.")) {
+                playerList.innerHTML = "";
+            }
+            playerList.innerHTML += `<p>${player.Name} - <strong>0 pts</strong></p>`;
+        }
+
+
+        connection.on("GameUpdated", (gameState) => {
+            updateGameState(gameState);
+        });
+
+        connection.on("RollPigs", (gameState) => {
+           // logMessage(`🎲 ${gameState.currentPlayer.name} rolled: <span class="highlight">${gameState.lastRollResult}</span> (+${gameState.lastRollScore} points)`);
+            updateGameState(gameState);
+        });
+
+        connection.on("BankPoints", (gameState) => {
+            logMessage(`💰 ${gameState.currentPlayer.name} banked their points!`);
+            updateGameState(gameState);
+        });
+
+        function createGame() {
+            connection.invoke("CreateGame").catch(err => logMessage("❌ Error: " + err));
+        }
+
+        function joinGame() {
+            const gameId = document.getElementById("gameIdInput").value.trim();
+            const playerName = document.getElementById("playerNameInput").value.trim();
+
+            if (!gameId || !playerName) {
+                logMessage("❌ Enter both Game ID and Player Name.");
+                console.warn("❌ Missing Game ID or Player Name.");
+                return false;
+            }
+
+            console.log(`🔄 Sending JoinGame request: GameId=${gameId}, PlayerName=${playerName}`);
+
+            connection.invoke("JoinGame", gameId, playerName)
+                .then(() => console.log("✅ JoinGame request sent successfully"))
+                .catch(err => {
+                    logMessage("❌ Error: " + err);
+                    console.error("❌ Error invoking JoinGame:", err);
+                });
+
+            return true;
+        }
+
+
+        function rollPigs() {
+            const gameId = document.getElementById("gameIdInput").value;
+            if (!gameId) {
+                logMessage("⚠️ Enter Game ID.");
+                return;
+            }
+            connection.invoke("RollPigs", { GameId: gameId })
+                .catch(err => logMessage("❌ Error: " + err));
+        }
+
+        function bankPoints() {
+            const gameId = document.getElementById("gameIdInput").value;
+            if (!gameId) {
+                logMessage("⚠️ Enter Game ID.");
+                return;
+            }
+            connection.invoke("BankPoints", { GameId: gameId })
+                .catch(err => logMessage("❌ Error: " + err));
+        }
+
+        function updateGameState(gameState) {
+            document.getElementById("turnTracker").innerHTML = `🎯 It's <span class="highlight">${gameState.currentPlayer.name}'s</span> turn!`;
+
+            let playerListHtml = "";
+            gameState.players.forEach(player => {
+                playerListHtml += `<p>${player.name} - <strong>${player.score} pts</strong></p>`;
+            });
+            document.getElementById("playerList").innerHTML = playerListHtml;
+        }
+
+        function updatePlayerList(player) {
+            let playerList = document.getElementById("playerList");
+            if (playerList.innerHTML.includes("No players yet.")) {
+                playerList.innerHTML = "";
+            }
+            playerList.innerHTML += `<p>${player.name} - <strong>0 pts</strong></p>`;
+        }
+
+        function logMessage(message) {
+            const logElement = document.getElementById("log");
+            logElement.innerHTML += `<p>${message}</p>`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
     </script>
 </body>
 </html>

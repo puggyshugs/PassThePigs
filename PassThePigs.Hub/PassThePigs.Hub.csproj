@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../PassThePigs.Domain/PassThePigs.Domain.csproj" />
-    <ProjectReference Include="../PassThePigs.GameLogic/PassThePigs.GameLogic.csproj" />
     <ProjectReference Include="../PassThePigs.Services/PassThePigs.Services.csproj" />
   </ItemGroup>
 </Project>
