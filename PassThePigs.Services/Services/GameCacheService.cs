@@ -1,8 +1,6 @@
 using PassThePigs.Services.Interfaces;
-using PassThePigs.Services.Cache.CacheModels;
-using PassThePigs.Services.Cache.Interfaces;
+using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
-using System.Threading.Tasks;
 
 namespace PassThePigs.Services.Services;
 

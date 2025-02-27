@@ -1,10 +1,11 @@
 using PassThePigs.Hub.Hubs;
-using PassThePigs.Services.Cache.Interfaces;
+using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Services.Interfaces;
 using PassThePigs.Services.Services;
 using Microsoft.OpenApi.Models;
 using PassThePigs.GameLogic.Services;
 using PassThePigs.Services.Helpers;
+using PassThePigs.Data.Cache;
 
 namespace PassThePigs
 {

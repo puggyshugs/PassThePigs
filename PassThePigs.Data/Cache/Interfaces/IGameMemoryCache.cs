@@ -1,8 +1,6 @@
-using System;
 using PassThePigs.Domain;
-using PassThePigs.Services.Cache.CacheModels;
 
-namespace PassThePigs.Services.Cache.Interfaces;
+namespace PassThePigs.Data.Cache.Interfaces;
 
 public interface IGameMemoryCache
 {
