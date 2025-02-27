@@ -1,12 +1,13 @@
 using PassThePigs.Domain;
+using PassThePigs.Services.Helpers.Interfaces;
 
 namespace PassThePigs.Services.Helpers
 {
-    public class PigThrowLogicHelper
+    public class PigThrowLogicHelper : IPigThrowLogicHelper
     {
-        private static readonly Random _random = new();
+        private readonly Random _random = new();
 
-        private static readonly Dictionary<string, (int Points, double Probability)> _pigRollProbabilities = new()
+        private readonly Dictionary<string, (int Points, double Probability)> _pigRollProbabilities = new()
         {
             { "Pig Out", (0, 0.30) },
             { "Sider", (1, 0.25) },
@@ -21,7 +22,7 @@ namespace PassThePigs.Services.Helpers
             { "Making Bacon", (0, 0.01) }
         };
 
-        public static string RollPigs(out int points)
+        public string RollPigs(out int points)
         {
             double roll = _random.NextDouble();
             double cumulative = 0.0;
@@ -40,7 +41,7 @@ namespace PassThePigs.Services.Helpers
             return "Pig Out"; // Default case (should never reach here)
         }
 
-        public static void HandlePigRoll(ref PlayerModel player, ref int playerScore, ref bool turnOver, ref bool isMakingBacon)
+        public void HandlePigRoll(ref PlayerModel player, ref int playerScore, ref bool turnOver, ref bool isMakingBacon)
         {
             string rollResult = RollPigs(out int points);
 

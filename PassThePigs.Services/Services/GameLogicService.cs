@@ -2,18 +2,21 @@ using PassThePigs.Services.Interfaces;
 using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
 using PassThePigs.Services.Helpers;
+using PassThePigs.Services.Helpers.Interfaces;
 
 namespace PassThePigs.GameLogic.Services;
 
 public class GameLogicService : IGameLogicService
 {
     private readonly IGameMemoryCache _gameMemoryCache;
-    private readonly PlayerLogicHelper _playerLogicHelper;
+    private readonly IPlayerLogicHelper _playerLogicHelper;
+    private readonly IPigThrowLogicHelper _pigThrowLogicHelper;
 
-    public GameLogicService(IGameMemoryCache gameMemoryCache, PlayerLogicHelper playerLogicHelper)
+    public GameLogicService(IGameMemoryCache gameMemoryCache, IPlayerLogicHelper playerLogicHelper, IPigThrowLogicHelper pigThrowLogicHelper)
     {
         _gameMemoryCache = gameMemoryCache;
         _playerLogicHelper = playerLogicHelper;
+        _pigThrowLogicHelper = pigThrowLogicHelper;
     }
 
     public bool AddPlayer(Guid gameId, string playerName)
@@ -44,7 +47,7 @@ public class GameLogicService : IGameLogicService
         bool isMakingBacon = false;
         int playerScore = player.Score;
         bool turnOver = player.TurnOver;
-        PigThrowLogicHelper.HandlePigRoll(
+        _pigThrowLogicHelper.HandlePigRoll(
             ref player, ref playerScore, ref turnOver, ref isMakingBacon);
 
         if (turnOver)
