@@ -1,6 +1,4 @@
-using System;
 using PassThePigs.Domain;
-using PassThePigs.Services.Cache.CacheModels;
 
 namespace PassThePigs.Services.Interfaces;
 
