@@ -2,6 +2,7 @@ using PassThePigs.Services.Interfaces;
 using PassThePigs.Services.Cache.CacheModels;
 using PassThePigs.Services.Cache.Interfaces;
 using PassThePigs.Domain;
+using System.Threading.Tasks;
 
 namespace PassThePigs.Services.Services;
 
@@ -29,7 +30,7 @@ public class GameCacheService : IGameCacheService
         return gameState;
     }
 
-    public GameStateModel? GetGameState(Guid gameId)
+    public GameStateModel GetGameState(Guid gameId)
     {
         var gameState = _gameMemoryCache.GetGameState(gameId);
         if (gameState == null)

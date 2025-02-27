@@ -15,14 +15,16 @@ public class GameMemoryCache : IGameMemoryCache
         return gameState;
     }
 
-    public void UpdateGame(Guid gameId, GameStateModel gameState)
+    public void UpdateGame(Guid gameId, GameStateModel updatedState)
     {
-        _cachedGamesList[gameId] = gameState;
+        // TryUpdate is built into concurrent dictionary and only updates the game state
+        // if the game state hasn't been updated since last read, preventing simultaneous updates
+        _cachedGamesList.TryUpdate(gameId, updatedState, _cachedGamesList[gameId]);
     }
 
     public GameStateModel? GetGameState(Guid gameId)
     {
-        return _cachedGamesList.TryGetValue(gameId, out var gameState) ? gameState : null;
+        return _cachedGamesList.TryGetValue(gameId, out GameStateModel? gameState) ? gameState : null;
     }
 
     public void EndGame(Guid gameId)
