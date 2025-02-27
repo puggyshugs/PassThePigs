@@ -1,9 +1,8 @@
 using System.Collections.Concurrent;
+using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
-using PassThePigs.Services.Cache.CacheModels;
-using PassThePigs.Services.Cache.Interfaces;
 
-namespace PassThePigs.Services.Services;
+namespace PassThePigs.Data.Cache;
 
 public class GameMemoryCache : IGameMemoryCache
 {
@@ -17,8 +16,8 @@ public class GameMemoryCache : IGameMemoryCache
 
     public void UpdateGame(Guid gameId, GameStateModel updatedState)
     {
-        // TryUpdate is built into concurrent dictionary and only updates the game state
-        // if the game state hasn't been updated since last read, preventing simultaneous updates
+        /* TryUpdate is built into concurrent dictionary and only updates the game state
+           if the game state hasn't been updated since last read, preventing simultaneous updates */
         _cachedGamesList.TryUpdate(gameId, updatedState, _cachedGamesList[gameId]);
     }
 

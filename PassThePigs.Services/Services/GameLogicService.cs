@@ -1,5 +1,5 @@
 using PassThePigs.Services.Interfaces;
-using PassThePigs.Services.Cache.Interfaces;
+using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
 using PassThePigs.Services.Helpers;
 

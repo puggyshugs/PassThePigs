@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassThePigs.Hub", "PassTheP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassThePigs.Domain", "PassThePigs.Domain\PassThePigs.Domain.csproj", "{BD46A347-8FC1-437C-B936-0FBA44E98E39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassThePigs.Data", "PassThePigs.Data\PassThePigs.Data.csproj", "{100FB138-CBBB-406D-8487-992D28598872}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BD46A347-8FC1-437C-B936-0FBA44E98E39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD46A347-8FC1-437C-B936-0FBA44E98E39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD46A347-8FC1-437C-B936-0FBA44E98E39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100FB138-CBBB-406D-8487-992D28598872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100FB138-CBBB-406D-8487-992D28598872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100FB138-CBBB-406D-8487-992D28598872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100FB138-CBBB-406D-8487-992D28598872}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
