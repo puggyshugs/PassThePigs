@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PassThePigs.Services.Interfaces;
 using PassThePigsApi.Mappers;
@@ -17,7 +16,7 @@ namespace PassThePigs.Api.Controllers
         }
 
         [HttpGet("GetGameState")]
-        public IActionResult GetGameState(Guid gameId)
+        public async Task<IActionResult> GetGameState(Guid gameId)
         {
             var gameState = _gameCacheService.GetGameState(gameId);
             if (gameState == null)
@@ -28,7 +27,7 @@ namespace PassThePigs.Api.Controllers
         }
 
         [HttpPost("CreateGame")]
-        public IActionResult CreateGame()
+        public async Task<IActionResult> CreateGame()
         {
             var createdGame = _gameCacheService.CreateGame();
             return Ok(GameStateMapper.ToDto(createdGame));
@@ -37,7 +36,7 @@ namespace PassThePigs.Api.Controllers
         [HttpDelete("EndGame")]
         // so for this, when react signals to end game, it will have to send over the game id, 
         // which will be sent to the client when the game is created
-        public IActionResult EndGame(Guid gameId)
+        public async Task<IActionResult> EndGame(Guid gameId)
         {
             _gameCacheService.RemoveGameState(gameId);
             return Ok(new { Message = $"Game: {gameId} ended!" });
