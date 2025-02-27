@@ -9,4 +9,5 @@ public class GameStateModel
     public List<PlayerModel> Players { get; set; } = [];
     public int CurrentTurnIndex { get; set; }
     public bool IsGameOver { get; set; }
+    public Guid CurrentPlayerId { get; set; }
 }
