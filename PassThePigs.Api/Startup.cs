@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using PassThePigs.GameLogic.Services;
 using PassThePigs.Services.Helpers;
 using PassThePigs.Data.Cache;
+using PassThePigs.Services.Helpers.Interfaces;
 
 namespace PassThePigs
 {
@@ -25,8 +26,8 @@ namespace PassThePigs
             services.AddSingleton<IGameMemoryCache, GameMemoryCache>();
             services.AddTransient<IGameCacheService, GameCacheService>();
             services.AddTransient<IGameLogicService, GameLogicService>();
-            services.AddTransient<PlayerLogicHelper, PlayerLogicHelper>();
-            services.AddTransient<PigThrowLogicHelper, PigThrowLogicHelper>();
+            services.AddTransient<IPlayerLogicHelper, PlayerLogicHelper>();
+            services.AddTransient<IPigThrowLogicHelper, PigThrowLogicHelper>();
 
             services.AddCors(options =>
             {

@@ -45,7 +45,7 @@ public class GameLogicService : IGameLogicService
         if (player == null) return gameStateModel;
 
         bool isMakingBacon = false;
-        int playerScore = player.Score;
+        int playerScore = player.TotalScore;
         bool turnOver = player.TurnOver;
         _pigThrowLogicHelper.HandlePigRoll(
             ref player, ref playerScore, ref turnOver, ref isMakingBacon);
@@ -77,7 +77,9 @@ public class GameLogicService : IGameLogicService
             Message = "Player not found"
         };
 
-        player.Score += player.Score;
+        player.TotalScore += player.Score;
+        player.Score = 0;
+
 
         _playerLogicHelper.EndTurn(gameStateModel);
         _gameMemoryCache.UpdateGame(gameStateModel.GameId, gameStateModel);

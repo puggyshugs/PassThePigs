@@ -16,9 +16,19 @@ public class GameMemoryCache : IGameMemoryCache
 
     public void UpdateGame(Guid gameId, GameStateModel updatedState)
     {
-        /* TryUpdate is built into concurrent dictionary and only updates the game state
-           if the game state hasn't been updated since last read, preventing simultaneous updates */
-        _cachedGamesList.TryUpdate(gameId, updatedState, _cachedGamesList[gameId]);
+        /*  _cachedGamesList.AddOrUpdate(gameId, updatedState, (key, existingState) => updatedState); 
+            Above is an alternative to TryUpdate, but TryUpdate is better for turn based games as it prevents overwriting.
+            If i change the game so multiple updates via multiple users are possible TryUpdate could start causing 
+            race conditions, should switch to AddOrUpdate.
+        
+            TryUpdate is built into concurrent dictionary and only updates the game state
+            if the game state hasn't been updated since last read, preventing simultaneous updates */
+
+        bool updated = _cachedGamesList.TryUpdate(gameId, updatedState, _cachedGamesList[gameId]);
+        if (!updated)
+        {
+            throw new InvalidOperationException($"Game state update failed for Game ID: {gameId}. Possible concurrent modification.");
+        }
     }
 
     public GameStateModel? GetGameState(Guid gameId)

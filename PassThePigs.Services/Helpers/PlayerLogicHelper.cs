@@ -1,8 +1,9 @@
 using PassThePigs.Domain;
+using PassThePigs.Services.Helpers.Interfaces;
 
 namespace PassThePigs.Services.Helpers
 {
-    public class PlayerLogicHelper
+    public class PlayerLogicHelper : IPlayerLogicHelper
     {
         private readonly int _maxPlayers = 6;
 
