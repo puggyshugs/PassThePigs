@@ -49,28 +49,22 @@ namespace PassThePigs.Services.Helpers
             {
                 playerScore = 0;
                 turnOver = true;
+                return;
             }
-            else if (rollResult == "Making Bacon")
+            if (rollResult == "Making Bacon")
             {
                 isMakingBacon = true;
                 turnOver = true;
+                return;
             }
-            else
+
+            playerScore += points;
+            if (playerScore >= 100)
             {
-                playerScore += points;
-                if (playerScore >= 100)
-                {
-                    player.HasWon = true;
-                    turnOver = true;
-                }
+                player.HasWon = true;
+                turnOver = true;
+                return;
             }
-
-        }
-
-        public static void BankPoints(PlayerModel player, ref int roundScore)
-        {
-            player.Score += roundScore;
-            roundScore = 0;
         }
     }
 }

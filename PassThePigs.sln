@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassThePigs.Api.Tests", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassThePigs.Services.Tests", "Tests\PassThePigs.Services.Tests\PassThePigs.Services.Tests.csproj", "{9EBB614B-4B15-46A2-AFBF-CDB5A4114299}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassThePigs.Hub.Tests", "Tests\PassThePigs.Hub.Tests\PassThePigs.Hub.Tests.csproj", "{B799CD61-E787-4916-B11F-F0D772953008}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{9EBB614B-4B15-46A2-AFBF-CDB5A4114299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EBB614B-4B15-46A2-AFBF-CDB5A4114299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EBB614B-4B15-46A2-AFBF-CDB5A4114299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B799CD61-E787-4916-B11F-F0D772953008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B799CD61-E787-4916-B11F-F0D772953008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B799CD61-E787-4916-B11F-F0D772953008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B799CD61-E787-4916-B11F-F0D772953008}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +66,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AE9DB100-7804-4DD9-9193-CD257C6B1B35} = {66F6B121-32BC-4D3E-9B66-8BE17ED8C137}
 		{9EBB614B-4B15-46A2-AFBF-CDB5A4114299} = {66F6B121-32BC-4D3E-9B66-8BE17ED8C137}
+		{B799CD61-E787-4916-B11F-F0D772953008} = {66F6B121-32BC-4D3E-9B66-8BE17ED8C137}
 	EndGlobalSection
 EndGlobal
