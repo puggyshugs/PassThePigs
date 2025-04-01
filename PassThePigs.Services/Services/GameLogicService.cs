@@ -1,42 +1,44 @@
 using PassThePigs.Services.Interfaces;
 using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
-using PassThePigs.Services.Helpers;
 using PassThePigs.Services.Helpers.Interfaces;
 
 namespace PassThePigs.GameLogic.Services;
 
 public class GameLogicService : IGameLogicService
 {
-    private readonly IGameMemoryCache _gameMemoryCache;
+    private readonly IGameCacheService _gameCacheService;
     private readonly IPlayerLogicHelper _playerLogicHelper;
     private readonly IPigThrowLogicHelper _pigThrowLogicHelper;
 
-    public GameLogicService(IGameMemoryCache gameMemoryCache, IPlayerLogicHelper playerLogicHelper, IPigThrowLogicHelper pigThrowLogicHelper)
+    public GameLogicService(IGameCacheService gameCacheService, IPlayerLogicHelper playerLogicHelper, IPigThrowLogicHelper pigThrowLogicHelper)
     {
-        _gameMemoryCache = gameMemoryCache;
+        _gameCacheService = gameCacheService;
         _playerLogicHelper = playerLogicHelper;
         _pigThrowLogicHelper = pigThrowLogicHelper;
     }
 
-    public bool AddPlayer(Guid gameId, string playerName)
+    public GameStateModel AddPlayer(Guid gameId, string playerName)
     {
-        var gameState = _gameMemoryCache.GetGameState(gameId);
-        if (gameState == null) return false;
+        GameStateModel updatedState = new GameStateModel();
+        var gameState = _gameCacheService.GetGameState(gameId);
+        if (gameState == null) return new GameStateModel();
 
         bool playerAdded = _playerLogicHelper.AddPlayer(ref gameState, playerName);
         if (playerAdded)
         {
-            _gameMemoryCache.UpdateGame(gameState.GameId, gameState);
+            _gameCacheService.SaveGameState(gameState.GameId, gameState);
+            updatedState = _gameCacheService.GetGameState(gameState.GameId);
         }
-        return playerAdded;
+        return updatedState;
     }
 
-    public bool RemovePlayer(GameStateModel gameStateModel)
+    public GameStateModel RemovePlayer(GameStateModel gameStateModel)
     {
         var result = _playerLogicHelper.RemovePlayer(gameStateModel);
-        _gameMemoryCache.UpdateGame(gameStateModel.GameId, gameStateModel);
-        return result;
+        _gameCacheService.SaveGameState(gameStateModel.GameId, gameStateModel);
+        var updatedGame = _gameCacheService.GetGameState(gameStateModel.GameId);
+        return updatedGame;
     }
 
     public GameStateModel PlayerRolls(GameStateModel gameStateModel)
@@ -60,7 +62,7 @@ public class GameLogicService : IGameLogicService
             player.Score = playerScore;
         }
 
-        _gameMemoryCache.UpdateGame(gameStateModel.GameId, gameStateModel);
+        _gameCacheService.SaveGameState(gameStateModel.GameId, gameStateModel);
         return gameStateModel;
     }
 
@@ -80,10 +82,9 @@ public class GameLogicService : IGameLogicService
         player.TotalScore += player.Score;
         player.Score = 0;
 
-
         _playerLogicHelper.EndTurn(gameStateModel);
-        _gameMemoryCache.UpdateGame(gameStateModel.GameId, gameStateModel);
-        var updatedState = _gameMemoryCache.GetGameState(gameStateModel.GameId);
+        _gameCacheService.SaveGameState(gameStateModel.GameId, gameStateModel);
+        var updatedState = _gameCacheService.GetGameState(gameStateModel.GameId);
 
         return updatedState;
     }
