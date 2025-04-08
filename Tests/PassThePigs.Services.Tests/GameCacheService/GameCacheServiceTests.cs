@@ -65,7 +65,7 @@ public class GameCacheServiceTests
     {
         // Arrange
         var gameId = Guid.NewGuid();
-        _gameMemoryCache.GetGameState(gameId).Returns((GameStateModel)null);
+        _gameMemoryCache.GetGameState(gameId).Returns(_gameCacheService.CreateGame());
 
         // Act
         var result = _gameCacheService.GetGameState(gameId);
