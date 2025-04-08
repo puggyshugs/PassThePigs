@@ -3,19 +3,21 @@ using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
 using PassThePigs.Services.Helpers.Interfaces;
 using PassThePigs.Services.Interfaces;
+using PassThePigs.Services.Helpers.Enums;
+using PassThePigs.Services.Helpers;
 
 namespace PassThePigs.Services.Tests.GameCacheServiceTests;
 
 public class GameLogicServiceTests
 {
-    private readonly IGameMemoryCache _gameMemoryCache;
+    private readonly IGameCacheService _gameMemoryCache;
     private readonly IPlayerLogicHelper _playerLogicHelper;
     private readonly IGameLogicService _gameLogicService;
     private readonly IPigThrowLogicHelper _pigThrowLogicHelper;
 
     public GameLogicServiceTests()
     {
-        _gameMemoryCache = Substitute.For<IGameMemoryCache>();
+        _gameMemoryCache = Substitute.For<IGameCacheService>();
         _pigThrowLogicHelper = Substitute.For<IPigThrowLogicHelper>();
         _playerLogicHelper = Substitute.For<IPlayerLogicHelper>();
         _gameLogicService = new GameLogicService(_gameMemoryCache, _playerLogicHelper, _pigThrowLogicHelper);
@@ -34,19 +36,21 @@ public class GameLogicServiceTests
                 new PlayerModel { PlayerId = Guid.NewGuid(), PlayerName = "Player1", Score = 0 }
             }
         };
+
         _gameMemoryCache.GetGameState(gameId).Returns(gameState);
-        _playerLogicHelper.AddPlayer(ref gameState, gameState.Players.FirstOrDefault().PlayerName).Returns(true);
+        var helper = new PlayerLogicHelper();
+        helper.AddPlayer(gameState, "Player2");
 
         // Act
-        var result = _gameLogicService.AddPlayer(gameId, "Player1");
+        var result = _gameLogicService.AddPlayer(gameId, "Player2");
 
         // Assert
-        Assert.True(result);
-        _gameMemoryCache.Received(1).UpdateGame(gameId, gameState);
+        Assert.Equal("PlayerAddedSuccessfully", result.Message);
+        _gameMemoryCache.Received(1).SaveGameState(gameId, gameState);
     }
 
     [Fact]
-    public void AddPlayer_WhenGameDoesNotExist_ShouldReturnFalse()
+    public void AddPlayer_WhenGameDoesNotExist_ShouldReturnAnEmptyGameStateModel()
     {
         // Arrange
         var gameId = Guid.NewGuid();
@@ -56,22 +60,27 @@ public class GameLogicServiceTests
         var result = _gameLogicService.AddPlayer(gameId, "Player1");
 
         // Assert
-        Assert.False(result);
+        Assert.Equal(result.GameId, Guid.Empty);
     }
 
     [Fact]
-    public void RemovePlayer_ShouldCallRemoveAndUpdateCache()
+    public void RemovePlayer_Helper_ShouldRemovePlayerFromGameState()
     {
-        // Arrange
-        var gameState = new GameStateModel { GameId = Guid.NewGuid() };
-        _playerLogicHelper.RemovePlayer(gameState).Returns(true);
+        var gameState = new GameStateModel
+        {
+            GameId = Guid.NewGuid(),
+            Players = new List<PlayerModel>
+        {
+            new PlayerModel { PlayerId = Guid.NewGuid(), PlayerName = "Player1", Score = 0 },
+            new PlayerModel { PlayerId = Guid.NewGuid(), PlayerName = "Player2", Score = 0 }
+        }
+        };
 
-        // Act
-        var result = _gameLogicService.RemovePlayer(gameState);
+        var helper = new PlayerLogicHelper();
+        helper.RemovePlayer(gameState, "Player1");
 
-        // Assert
-        Assert.True(result);
-        _gameMemoryCache.Received(1).UpdateGame(gameState.GameId, gameState);
+        Assert.Single(gameState.Players);
+        Assert.DoesNotContain(gameState.Players, p => p.PlayerName == "Player1");
     }
 
     [Fact]
@@ -91,7 +100,7 @@ public class GameLogicServiceTests
 
         // Assert
         Assert.NotNull(result);
-        _gameMemoryCache.Received(1).UpdateGame(gameState.GameId, gameState);
+        _gameMemoryCache.Received(1).SaveGameState(gameState.GameId, gameState);
     }
 
     [Fact]

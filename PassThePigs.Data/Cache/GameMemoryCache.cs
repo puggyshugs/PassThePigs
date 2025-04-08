@@ -18,8 +18,8 @@ public class GameMemoryCache : IGameMemoryCache
     {
         /*  _cachedGamesList.AddOrUpdate(gameId, updatedState, (key, existingState) => updatedState); 
             Above is an alternative to TryUpdate, but TryUpdate is better for turn based games as it prevents overwriting.
-            If i change the game so multiple updates via multiple users are possible TryUpdate could start causing 
-            race conditions, should switch to AddOrUpdate.
+            If i change the game so that multiple updates via multiple users are possible TryUpdate could start causing 
+            race conditions, should switch to AddOrUpdate. But so far only 1 person can TryUpdate at a time.
         
             TryUpdate is built into concurrent dictionary and only updates the game state
             if the game state hasn't been updated since last read, preventing simultaneous updates */

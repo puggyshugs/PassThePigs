@@ -9,10 +9,13 @@ namespace PassThePigs.Api.Controllers
     public class GameController : ControllerBase
     {
         private readonly IGameCacheService _gameCacheService;
+        private readonly IGameLogicService _gameLogicService;
 
-        public GameController(IGameCacheService gameCacheService)
+
+        public GameController(IGameCacheService gameCacheService, IGameLogicService gameLogicService)
         {
             _gameCacheService = gameCacheService;
+            _gameLogicService = gameLogicService;
         }
 
         [HttpGet("GetGameState")]
@@ -24,6 +27,28 @@ namespace PassThePigs.Api.Controllers
                 return NotFound("No active game found.");
             }
             return Ok(GameStateMapper.ToDto(gameState));
+        }
+
+        [HttpPost("RemovePlayer")]
+        public async Task<IActionResult> RemovePlayer(Guid gameId, string playerName)
+        {
+            var updatedGameState = _gameLogicService.RemovePlayer(gameId, playerName);
+            if (updatedGameState == null)
+            {
+                return NotFound("No active game found.");
+            }
+            return Ok(GameStateMapper.ToDto(updatedGameState));
+        }
+
+        [HttpPost("AddPlayer")]
+        public async Task<IActionResult> AddPlayer(Guid gameId, string playerName)
+        {
+            var updatedGameState = _gameLogicService.AddPlayer(gameId, playerName);
+            if (updatedGameState == null)
+            {
+                return NotFound("No active game found.");
+            }
+            return Ok(GameStateMapper.ToDto(updatedGameState));
         }
 
         [HttpPost("CreateGame")]
