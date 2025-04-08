@@ -1,46 +1,47 @@
 using PassThePigs.Domain;
 using PassThePigs.Services.Helpers.Interfaces;
-
+using PassThePigs.Services.Helpers.Enums;
+using System.Linq;
 namespace PassThePigs.Services.Helpers
 {
     public class PlayerLogicHelper : IPlayerLogicHelper
     {
         private readonly int _maxPlayers = 6;
 
-        public bool AddPlayer(ref GameStateModel gameState, string playerName)
+        public void AddPlayer(GameStateModel gameState, string playerName)
         {
             if (gameState.Players.Count >= _maxPlayers)
-                return false; // Game is full
+                gameState.Message = AddPlayerMessages.FullGame.ToString(); // Game is full
 
             if (gameState.Players.Any(p => p.PlayerName == playerName))
-                return false; // Prevent duplicate names
+                gameState.Message = AddPlayerMessages.DuplicatePlayerName.ToString(); // Prevent duplicate names
+            else
+            {
+                gameState.Players.Add(new PlayerModel { PlayerId = Guid.NewGuid(), PlayerName = playerName, Score = 0 });
+                gameState.Message = AddPlayerMessages.PlayerAddedSuccessfully.ToString(); // Player added successfully
 
-            gameState.Players.Add(new PlayerModel { PlayerId = Guid.NewGuid(), PlayerName = playerName, Score = 0 });
-
-            // If first player, set as current turn
-            if (gameState.Players.Count == 1)
-                gameState.CurrentTurnIndex = 0;
-
-            return true;
+                // If first player, set as current turn
+                if (gameState.Players.Count == 1)
+                    gameState.CurrentTurnIndex = 0;
+            }
         }
 
-        public bool RemovePlayer(GameStateModel gameState)
+        public void RemovePlayer(GameStateModel gameState, string playerName)
         {
-            var player = gameState.Players.FirstOrDefault(p => p.PlayerId == gameState.CurrentPlayerId);
-            if (player != null)
+            var player = gameState.Players.FirstOrDefault(p => p.PlayerName.ToLower() == playerName.ToLower());
+            if (player == null)
             {
-                int playerIndex = gameState.Players.IndexOf(player);
-                gameState.Players.Remove(player);
-
-                // Adjust turn index
-                if (gameState.Players.Count > 0)
-                {
-                    if (gameState.CurrentTurnIndex >= gameState.Players.Count)
-                        gameState.CurrentTurnIndex = 0;
-                }
-                return true;
+                gameState.Message = RemovePlayerMessages.PlayerNotFound.ToString();
+                return;
             }
-            return false;
+            gameState.Players.Remove(player);
+            gameState.Message = RemovePlayerMessages.PlayerRemovedSuccessfully.ToString();
+
+            if (gameState.Players.Count > 0)
+            {
+                if (gameState.CurrentTurnIndex >= gameState.Players.Count)
+                    gameState.CurrentTurnIndex = 0;
+            }
         }
 
         public void EndTurn(GameStateModel gameState)

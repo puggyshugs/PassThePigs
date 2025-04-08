@@ -5,7 +5,7 @@ namespace PassThePigs.Services.Interfaces;
 public interface IGameLogicService
 {
     GameStateModel AddPlayer(Guid gameId, string playerName);
-    GameStateModel RemovePlayer(GameStateModel gameStateModel);
+    GameStateModel RemovePlayer(Guid gameId, string playerName);
     GameStateModel PlayerRolls(GameStateModel gameStateModel);
     GameStateModel PlayerBanks(GameStateModel gameStateModel);
 }

@@ -33,7 +33,7 @@ public class GameCacheService : IGameCacheService
         var gameState = _gameMemoryCache.GetGameState(gameId);
         if (gameState == null)
         {
-            throw new KeyNotFoundException($"Game {gameId} not found.");
+            return CreateGame();
         }
         gameState.Message = $"Game:{gameId} successfully retrieved.";
         return gameState;

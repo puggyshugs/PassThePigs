@@ -2,6 +2,7 @@ using PassThePigs.Services.Interfaces;
 using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
 using PassThePigs.Services.Helpers.Interfaces;
+using PassThePigs.Services.Helpers.Enums;
 
 namespace PassThePigs.GameLogic.Services;
 
@@ -20,25 +21,27 @@ public class GameLogicService : IGameLogicService
 
     public GameStateModel AddPlayer(Guid gameId, string playerName)
     {
-        GameStateModel updatedState = new GameStateModel();
         var gameState = _gameCacheService.GetGameState(gameId);
         if (gameState == null) return new GameStateModel();
 
-        bool playerAdded = _playerLogicHelper.AddPlayer(ref gameState, playerName);
-        if (playerAdded)
+        _playerLogicHelper.AddPlayer(gameState, playerName);
+        if (gameState.Message.Equals(AddPlayerMessages.PlayerAddedSuccessfully))
         {
-            _gameCacheService.SaveGameState(gameState.GameId, gameState);
-            updatedState = _gameCacheService.GetGameState(gameState.GameId);
+            gameState.Message = AddPlayerMessages.PlayerAddedSuccessfully.ToString();
+            return gameState;
         }
-        return updatedState;
+        _gameCacheService.SaveGameState(gameState.GameId, gameState);
+        return gameState;
     }
 
-    public GameStateModel RemovePlayer(GameStateModel gameStateModel)
+    public GameStateModel RemovePlayer(Guid gameId, string playerName)
     {
-        var result = _playerLogicHelper.RemovePlayer(gameStateModel);
-        _gameCacheService.SaveGameState(gameStateModel.GameId, gameStateModel);
-        var updatedGame = _gameCacheService.GetGameState(gameStateModel.GameId);
-        return updatedGame;
+        var gameState = _gameCacheService.GetGameState(gameId);
+        if (gameState == null) return new GameStateModel();
+
+        _playerLogicHelper.RemovePlayer(gameState, playerName);
+        _gameCacheService.SaveGameState(gameState.GameId, gameState);
+        return gameState;
     }
 
     public GameStateModel PlayerRolls(GameStateModel gameStateModel)
