@@ -125,4 +125,45 @@ public class GameLogicServiceTests
         // Assert
         Assert.Equal("Player not found", result.Message);
     }
+
+    [Fact]
+    public void PlayerBanks_ShouldAddScoreToTotal_AndResetScore_AndEndTurn()
+    {
+        // Arrange
+        var playerId = Guid.NewGuid();
+        var gameId = Guid.NewGuid();
+        var startingScore = 15;
+        var totalScoreBefore = 30;
+
+        var player = new PlayerModel
+        {
+            PlayerId = playerId,
+            PlayerName = "TestPlayer",
+            Score = startingScore,
+            TotalScore = totalScoreBefore,
+            TurnOver = false
+        };
+
+        var gameState = new GameStateModel
+        {
+            GameId = gameId,
+            CurrentPlayerId = playerId,
+            Players = new List<PlayerModel> { player }
+        };
+
+        var mockCache = Substitute.For<IGameCacheService>();
+        var mockPlayerHelper = Substitute.For<IPlayerLogicHelper>();
+        var mockPigHelper = Substitute.For<IPigThrowLogicHelper>();
+
+        var service = new GameLogicService(mockCache, mockPlayerHelper, mockPigHelper);
+
+        // Act
+        var result = service.PlayerBanks(gameState);
+
+        // Assert
+        Assert.Equal(totalScoreBefore + startingScore, result.Players[0].TotalScore); // total updated
+        Assert.Equal(0, result.Players[0].Score); // score reset
+        mockPlayerHelper.Received(1).EndTurn(result); // end turn called
+    }
+
 }

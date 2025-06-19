@@ -4,7 +4,7 @@ namespace PassThePigs.Services.Interfaces;
 
 public interface IGameOrchestrationService
 {
-    Task<Guid> CreateGame();
+    //Task<Guid> CreateGame();
     Task<GameStateModel> UpdateGame(GameStateModel gameStateModel);
     Task<GameStateModel?> GetGameState(Guid gameId);
     Task<GameStateModel> JoinGame(Guid gameId, string playerName);

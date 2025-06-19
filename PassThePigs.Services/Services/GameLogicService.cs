@@ -1,5 +1,4 @@
 using PassThePigs.Services.Interfaces;
-using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
 using PassThePigs.Services.Helpers.Interfaces;
 using PassThePigs.Services.Helpers.Enums;
@@ -25,12 +24,6 @@ public class GameLogicService : IGameLogicService
         if (gameState == null) return new GameStateModel();
 
         _playerLogicHelper.AddPlayer(gameState, playerName);
-        if (gameState.Message.Equals(AddPlayerMessages.PlayerAddedSuccessfully))
-        {
-            gameState.Message = AddPlayerMessages.PlayerAddedSuccessfully.ToString();
-            return gameState;
-        }
-        _gameCacheService.SaveGameState(gameState.GameId, gameState);
         return gameState;
     }
 
@@ -40,7 +33,6 @@ public class GameLogicService : IGameLogicService
         if (gameState == null) return new GameStateModel();
 
         _playerLogicHelper.RemovePlayer(gameState, playerName);
-        _gameCacheService.SaveGameState(gameState.GameId, gameState);
         return gameState;
     }
 
@@ -65,7 +57,6 @@ public class GameLogicService : IGameLogicService
             player.Score = playerScore;
         }
 
-        _gameCacheService.SaveGameState(gameStateModel.GameId, gameStateModel);
         return gameStateModel;
     }
 
@@ -86,9 +77,6 @@ public class GameLogicService : IGameLogicService
         player.Score = 0;
 
         _playerLogicHelper.EndTurn(gameStateModel);
-        _gameCacheService.SaveGameState(gameStateModel.GameId, gameStateModel);
-        var updatedState = _gameCacheService.GetGameState(gameStateModel.GameId);
-
-        return updatedState;
+        return gameStateModel;
     }
 }

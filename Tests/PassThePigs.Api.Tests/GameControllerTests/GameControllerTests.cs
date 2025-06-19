@@ -10,11 +10,12 @@ namespace PassThePigs.Api.Tests.GameControllerTests;
 public class GameControllerTests
 {
     private readonly GameController _controller;
+    private readonly IGameLogicService _gameLogicService = Substitute.For<IGameLogicService>();
     private readonly IGameCacheService _gameCacheService = Substitute.For<IGameCacheService>();
 
     public GameControllerTests()
     {
-        _controller = new GameController(_gameCacheService);
+        _controller = new GameController(_gameCacheService, _gameLogicService);
     }
 
     [Fact]
@@ -54,10 +55,10 @@ public class GameControllerTests
     {
         // Arrange
         var gameState = new GameStateModel { GameId = Guid.NewGuid() };
-        _gameCacheService.CreateGame().Returns(gameState);
+        _gameCacheService.CreateGame(playerName: "Test").Returns(gameState);
 
         // Act
-        var result = await _controller.CreateGame();
+        var result = await _controller.CreateGame(playerName: "Test");
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -70,8 +71,7 @@ public class GameControllerTests
     {
         // Arrange
         var gameId = Guid.NewGuid();
-        var gameCacheService = Substitute.For<IGameCacheService>();
-        var controller = new GameController(gameCacheService);
+        var controller = new GameController(_gameCacheService, _gameLogicService);
 
         // Act
         var result = controller.EndGame(gameId);

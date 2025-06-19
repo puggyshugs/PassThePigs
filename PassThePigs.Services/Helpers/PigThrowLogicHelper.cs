@@ -27,13 +27,13 @@ namespace PassThePigs.Services.Helpers
             double roll = _random.NextDouble();
             double cumulative = 0.0;
 
-            foreach (var entry in _pigRollProbabilities)
+            foreach (var pos in _pigRollProbabilities)
             {
-                cumulative += entry.Value.Probability;
+                cumulative += pos.Value.Probability;
                 if (roll <= cumulative)
                 {
-                    points = entry.Value.Points;
-                    return entry.Key;
+                    points = pos.Value.Points;
+                    return pos.Key;
                 }
             }
 
@@ -49,13 +49,13 @@ namespace PassThePigs.Services.Helpers
             {
                 playerScore = 0;
                 turnOver = true;
-                return;
+                //return;
             }
             if (rollResult == "Making Bacon")
             {
                 isMakingBacon = true;
                 turnOver = true;
-                return;
+                //return;
             }
 
             playerScore += points;
@@ -63,7 +63,7 @@ namespace PassThePigs.Services.Helpers
             {
                 player.HasWon = true;
                 turnOver = true;
-                return;
+                //return;
             }
         }
     }

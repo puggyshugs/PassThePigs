@@ -4,7 +4,7 @@ namespace PassThePigs.Services.Interfaces;
 
 public interface IGameCacheService
 {
-    GameStateModel CreateGame();
+    GameStateModel CreateGame(string playerName);
     GameStateModel SaveGameState(Guid gameId, GameStateModel gameState);
     GameStateModel GetGameState(Guid gameId);
     GameStateModel RemoveGameState(Guid gameId);

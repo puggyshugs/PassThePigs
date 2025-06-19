@@ -14,13 +14,6 @@ public class GameOrchestrationService : IGameOrchestrationService
         _gameLogicService = gameLogicService;
     }
 
-    public async Task<Guid> CreateGame()
-    {
-        var gameState = _cacheService.CreateGame();
-        _cacheService.SaveGameState(gameState.GameId, gameState);
-        return gameState.GameId;
-    }
-
     public async Task<GameStateModel> UpdateGame(GameStateModel gameStateModel)
     {
         _cacheService.SaveGameState(gameStateModel.GameId, gameStateModel);
@@ -49,8 +42,7 @@ public class GameOrchestrationService : IGameOrchestrationService
             _gameLogicService.AddPlayer(gameId, playerName);
         }
 
-        var updatedState = _cacheService.GetGameState(gameId);
-        _cacheService.SaveGameState(gameId, updatedState);
+        var updatedState = _cacheService.SaveGameState(gameId, gameState);
         return updatedState;
     }
 

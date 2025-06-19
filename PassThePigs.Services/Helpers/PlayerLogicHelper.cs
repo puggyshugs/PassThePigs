@@ -51,25 +51,5 @@ namespace PassThePigs.Services.Helpers
                 gameState.CurrentTurnIndex = (gameState.CurrentTurnIndex + 1) % gameState.Players.Count;
             }
         }
-
-        // probably not needed
-        public void HandlePlayerReconnection(GameStateModel gameState, string playerName)
-        {
-            var player = gameState.Players.FirstOrDefault(p => p.PlayerName == playerName);
-            if (player != null)
-            {
-                player.IsConnected = true;
-            }
-        }
-
-        // also probably not needed
-        public void HandlePlayerDisconnection(GameStateModel gameState, string playerName)
-        {
-            var player = gameState.Players.FirstOrDefault(p => p.PlayerName == playerName);
-            if (player != null)
-            {
-                player.IsConnected = false;
-            }
-        }
     }
 }

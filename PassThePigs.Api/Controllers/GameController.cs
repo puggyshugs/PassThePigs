@@ -52,15 +52,13 @@ namespace PassThePigs.Api.Controllers
         }
 
         [HttpPost("CreateGame")]
-        public async Task<IActionResult> CreateGame()
+        public async Task<IActionResult> CreateGame(string playerName)
         {
-            var createdGame = _gameCacheService.CreateGame();
+            var createdGame = _gameCacheService.CreateGame(playerName);
             return Ok(GameStateMapper.ToDto(createdGame));
         }
 
         [HttpDelete("EndGame")]
-        // so for this, when react signals to end game, it will have to send over the game id, 
-        // which will be sent to the client when the game is created
         public async Task<IActionResult> EndGame(Guid gameId)
         {
             _gameCacheService.RemoveGameState(gameId);

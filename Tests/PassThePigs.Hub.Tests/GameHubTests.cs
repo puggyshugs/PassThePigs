@@ -37,24 +37,6 @@ public class GameHubTests
     }
 
     [Fact]
-    public async Task CreateGame_ShouldCallOrchestrationServiceAndNotifyClient()
-    {
-        // Arrange
-        var gameId = Guid.NewGuid();
-        _mockGameOrchestrationService.CreateGame().Returns(Task.FromResult(gameId));
-
-        // Act
-        await _hub.CreateGame();
-
-        // Assert
-        await _mockClientProxy.Received(1).SendCoreAsync(
-            "GameCreated",
-            Arg.Is<object[]>(args => args.Length == 1 && args[0].Equals(gameId)),
-            Arg.Any<CancellationToken>()
-        );
-    }
-
-    [Fact]
     public async Task JoinGame_ShouldAddPlayerAndNotifyGroup()
     {
         // Arrange

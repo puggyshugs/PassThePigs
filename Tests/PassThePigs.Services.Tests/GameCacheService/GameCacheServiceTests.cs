@@ -1,11 +1,13 @@
 using PassThePigs.Data.Cache.Interfaces;
 using PassThePigs.Domain;
+using PassThePigs.Services.Interfaces;
 using PassThePigs.Services.Services;
 
 namespace PassThePigs.Services.Tests.GameCacheServiceTests;
 public class GameCacheServiceTests
 {
     private readonly IGameMemoryCache _gameMemoryCache;
+
     private readonly GameCacheService _gameCacheService;
 
     public GameCacheServiceTests()
@@ -18,7 +20,7 @@ public class GameCacheServiceTests
     public void CreateGame_ShouldReturnNewGameState()
     {
         // Act
-        var result = _gameCacheService.CreateGame();
+        var result = _gameCacheService.CreateGame(playerName: "TestPlayer");
 
         // Assert
         Assert.NotNull(result);
@@ -65,7 +67,7 @@ public class GameCacheServiceTests
     {
         // Arrange
         var gameId = Guid.NewGuid();
-        _gameMemoryCache.GetGameState(gameId).Returns(_gameCacheService.CreateGame());
+        _gameMemoryCache.GetGameState(gameId).Returns(_gameCacheService.CreateGame(playerName: "TestPlayer"));
 
         // Act
         var result = _gameCacheService.GetGameState(gameId);

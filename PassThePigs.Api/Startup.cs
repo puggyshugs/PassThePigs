@@ -7,6 +7,7 @@ using PassThePigs.GameLogic.Services;
 using PassThePigs.Services.Helpers;
 using PassThePigs.Data.Cache;
 using PassThePigs.Services.Helpers.Interfaces;
+using PassThePigs.Services;
 
 namespace PassThePigs
 {
@@ -22,8 +23,9 @@ namespace PassThePigs
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PassThePigs.Api", Version = "v1" });
                 c.AddSignalRSwaggerGen();
             });
-            services.AddMemoryCache();
+            // services.AddMemoryCache();
             services.AddSingleton<IGameMemoryCache, GameMemoryCache>();
+            services.AddScoped<IGameOrchestrationService, GameOrchestrationService>();
             services.AddTransient<IGameCacheService, GameCacheService>();
             services.AddTransient<IGameLogicService, GameLogicService>();
             services.AddTransient<IPlayerLogicHelper, PlayerLogicHelper>();
@@ -34,10 +36,18 @@ namespace PassThePigs
                 options.AddPolicy("CorsPolicy", policy =>
                 {
                     policy.AllowAnyHeader()
-                          .AllowAnyMethod()
-                          .AllowCredentials()
-                          .WithOrigins("http://127.0.0.1:5500", "http://localhost:5500", "http://localhost:5233");
-                    //.SetIsOriginAllowed(origin => true); // React frontend URL, change for variable once deployed
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .WithOrigins(
+                            "http://localhost:5173",        // Vite default
+                            "http://localhost:5174",    // Vite alternative
+                            "http://localhost:5500",      // listed origin
+                            "http://127.0.0.1:5500",      // listed origin
+                            "https://localhost:5173",     // HTTPS version
+                            "https://localhost:5174",     // HTTPS alternate version
+                            "https://localhost:5500",     // HTTPS version
+                            "https://127.0.0.1:5500"      // HTTPS version
+                        );
                 });
             });
         }
@@ -55,8 +65,8 @@ namespace PassThePigs
                 });
             }
 
-            app.MapHub<GameHub>("/GameHub");
             app.UseCors("CorsPolicy");
+            app.MapHub<GameHub>("/GameHub");
 
             Console.WriteLine("SignalR Hub registered at /GameHub");
 
